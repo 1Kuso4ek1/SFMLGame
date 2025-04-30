@@ -16,6 +16,12 @@ private:
     void Render() override;
 
 private:
+    void ProcessCollision(std::unique_ptr<Object>& object);
+
+    void CheckScreenBounds(std::unique_ptr<Object>& object);
+    void CheckObjectBounds(std::unique_ptr<Object>& object);
+
+private:
     sf::Texture texture;
     std::vector<ObjectPtr> objects;
 };

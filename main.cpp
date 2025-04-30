@@ -2,7 +2,7 @@
 
 int main()
 {
-    Game game(sf::VideoMode({ 800, 600 }), "Game");
+    Game game(sf::VideoMode({ 1280, 720 }), "Game");
 
     game.Run();
 }

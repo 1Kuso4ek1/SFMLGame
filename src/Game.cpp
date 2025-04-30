@@ -34,43 +34,7 @@ void Game::Update(float deltaTime)
     {
         i->Update(deltaTime);
 
-        if(i->getPosition().x < 0.0f || i->getPosition().x > window->getSize().x)
-        {
-            i->HitXBounds();
-
-            if(i->getPosition().x < 0.0f)
-                i->move({ 0.0f - i->getPosition().x, 0.0f });
-            else
-                i->move({ window->getSize().x - i->getPosition().x, 0.0f });
-        }
-        if(i->getPosition().y < 0.0f || i->getPosition().y > window->getSize().y)
-        {
-            i->HitYBounds();
-
-            if(i->getPosition().y < 0.0f)
-                i->move({ 0.0f, 0.0f - i->getPosition().y });
-            else
-                i->move({ 0.0f, window->getSize().y - i->getPosition().y });
-        }
-
-        for(auto& j : objects)
-            if(i != j && (i->getPosition() - j->getPosition()).length() < 50.0f)
-            {
-                auto intersection = i->getGlobalBounds().findIntersection(j->getGlobalBounds());
-                if(intersection.has_value())
-                {
-                    if(intersection.value().size.x < intersection.value().size.y)
-                    {
-                        i->HitXBounds();
-                        i->move({ -intersection.value().size.x, 0.0f });
-                    }
-                    else
-                    {
-                        i->HitYBounds();
-                        i->move({ 0.0f, -intersection.value().size.y });
-                    }
-                }
-            }
+        ProcessCollision(i);
     }
 }
 
@@ -80,4 +44,55 @@ void Game::Render()
 
     for(auto& i : objects)
         window->draw(*i);
+}
+
+void Game::ProcessCollision(std::unique_ptr<Object>& object)
+{
+    CheckScreenBounds(object);
+    CheckObjectBounds(object);
+}
+
+void Game::CheckScreenBounds(std::unique_ptr<Object>& object)
+{
+    if(object->getPosition().x < 0.0f || object->getPosition().x > window->getSize().x)
+    {
+        object->HitXBounds();
+
+        if(object->getPosition().x < 0.0f)
+            object->move({ 0.0f - object->getPosition().x, 0.0f });
+        else
+            object->move({ window->getSize().x - object->getPosition().x, 0.0f });
+    }
+
+    if(object->getPosition().y < 0.0f || object->getPosition().y > window->getSize().y)
+    {
+        object->HitYBounds();
+
+        if(object->getPosition().y < 0.0f)
+            object->move({ 0.0f, 0.0f - object->getPosition().y });
+        else
+            object->move({ 0.0f, window->getSize().y - object->getPosition().y });
+    }
+}
+
+void Game::CheckObjectBounds(std::unique_ptr<Object>& object)
+{
+    for(auto& j : objects)
+        if(object != j && (object->getPosition() - j->getPosition()).length() < 50.0f)
+        {
+            auto intersection = object->getGlobalBounds().findIntersection(j->getGlobalBounds());
+            if(intersection.has_value())
+            {
+                if(intersection.value().size.x < intersection.value().size.y)
+                {
+                    object->HitXBounds();
+                    object->move({ -intersection.value().size.x, 0.0f });
+                }
+                else
+                {
+                    object->HitYBounds();
+                    object->move({ 0.0f, -intersection.value().size.y });
+                }
+            }
+        }
 }
