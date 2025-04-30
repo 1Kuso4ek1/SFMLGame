@@ -9,6 +9,9 @@ set(
     src/Game.cpp
     src/GameObject.cpp
     src/Object.cpp
+    src/Bird.cpp
+    src/Pipe.cpp
+    src/FlappyBird.cpp
 )
 
 set(CMAKE_CXX_STANDARD 23)

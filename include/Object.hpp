@@ -16,6 +16,8 @@ public:
     void HitXBounds();
     void HitYBounds();
 
+    void ApplyForce(const sf::Vector2f& force);
+
     void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 
 private:

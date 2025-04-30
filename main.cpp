@@ -1,8 +1,8 @@
-#include <Game.hpp>
+#include <FlappyBird.hpp>
 
 int main()
 {
-    Game game(sf::VideoMode({ 1280, 720 }), "Game");
+    FlappyBird game(sf::VideoMode({ 1280, 720 }), "FlappyBird");
 
     game.Run();
 }

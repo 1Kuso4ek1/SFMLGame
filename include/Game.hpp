@@ -19,10 +19,10 @@ private:
     void ProcessInput();
 
 private:
-    void ProcessCollision(std::unique_ptr<Object>& object);
+    void ProcessCollision(ObjectPtr& object);
 
-    void CheckScreenBounds(std::unique_ptr<Object>& object);
-    void CheckObjectBounds(std::unique_ptr<Object>& object);
+    void CheckScreenBounds(ObjectPtr& object);
+    void CheckObjectBounds(ObjectPtr& object);
 
 private:
     sf::Texture texture;

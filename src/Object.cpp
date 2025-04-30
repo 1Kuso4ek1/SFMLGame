@@ -22,9 +22,9 @@ void Object::Update(float deltaTime)
     velocity += sf::Vector2f(
         0.0f,
         0.98f
-    ) * speed;
+    ) * deltaTime * speed;
 
-    move(velocity * deltaTime);
+    move(velocity);
 
     circle.setPosition(getPosition());
 }
@@ -37,6 +37,11 @@ void Object::HitXBounds()
 void Object::HitYBounds()
 {
     velocity.y = -velocity.y / 1.6f;
+}
+
+void Object::ApplyForce(const sf::Vector2f& force)
+{
+    velocity += force;
 }
 
 void Object::draw(sf::RenderTarget& target, sf::RenderStates states) const

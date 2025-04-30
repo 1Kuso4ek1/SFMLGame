@@ -48,7 +48,7 @@ void Game::Render()
         window->draw(*i);
 }
 
-void Game::ProcessCollision(std::unique_ptr<Object>& object)
+void Game::ProcessCollision(ObjectPtr& object)
 {
     CheckScreenBounds(object);
     CheckObjectBounds(object);
@@ -67,7 +67,7 @@ void Game::ProcessInput()
     }
 }
 
-void Game::CheckScreenBounds(std::unique_ptr<Object>& object)
+void Game::CheckScreenBounds(ObjectPtr& object)
 {
     auto leftEdge = object->getPosition().x - object->getGlobalBounds().size.x / 2.0f;
     auto rightEdge = object->getPosition().x + object->getGlobalBounds().size.x / 2.0f;
@@ -96,12 +96,12 @@ void Game::CheckScreenBounds(std::unique_ptr<Object>& object)
     }
 }
 
-void Game::CheckObjectBounds(std::unique_ptr<Object>& object)
+void Game::CheckObjectBounds(ObjectPtr& object)
 {
-    for(auto& j : objects)
-        if(object != j && (object->getPosition() - j->getPosition()).length() < 50.0f)
+    for(auto& i : objects)
+        if(object != i && (object->getPosition() - i->getPosition()).length() < 50.0f)
         {
-            auto intersection = object->getGlobalBounds().findIntersection(j->getGlobalBounds());
+            auto intersection = object->getGlobalBounds().findIntersection(i->getGlobalBounds());
             if(intersection.has_value())
             {
                 if(intersection.value().size.x < intersection.value().size.y)
