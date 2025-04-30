@@ -10,6 +10,8 @@ Object::Object(const sf::Texture& texture)
     circle.setFillColor({ 255, 0, 0, 100 });
     circle.setOrigin({ circle.getRadius(), circle.getRadius() });
 
+    velocity.x = Random::Get().Range(-100.0f, 100.0f);
+
     setOrigin((sf::Vector2f)(texture.getSize()) / 2.0f);
 }
 
@@ -18,8 +20,8 @@ Object::~Object() {}
 void Object::Update(float deltaTime)
 {
     velocity += sf::Vector2f(
-        Random::Get().Range(-2.0f, 0.0f) + 1.0f,
-        Random::Get().Range(-2.0f, 0.0f) + 1.0f
+        0.0f,
+        0.98f
     ) * speed;
 
     move(velocity * deltaTime);
@@ -29,12 +31,12 @@ void Object::Update(float deltaTime)
 
 void Object::HitXBounds()
 {
-    velocity.x = -velocity.x;
+    velocity.x = -velocity.x / 2.0f;
 }
 
 void Object::HitYBounds()
 {
-    velocity.y = -velocity.y;
+    velocity.y = -velocity.y / 1.6f;
 }
 
 void Object::draw(sf::RenderTarget& target, sf::RenderStates states) const

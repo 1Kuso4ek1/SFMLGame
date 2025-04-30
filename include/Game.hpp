@@ -16,6 +16,9 @@ private:
     void Render() override;
 
 private:
+    void ProcessInput();
+
+private:
     void ProcessCollision(std::unique_ptr<Object>& object);
 
     void CheckScreenBounds(std::unique_ptr<Object>& object);

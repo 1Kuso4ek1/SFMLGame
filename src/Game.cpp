@@ -18,7 +18,7 @@ Game::Game(const sf::VideoMode& mode, const std::string& name)
 
         object->setPosition({
             Random::Get().Range(0.0f, window->getSize().x),
-            Random::Get().Range(0.0f, window->getSize().y)
+            Random::Get().Range(50.0f, window->getSize().y)
         });
         object->setScale({ 0.05f, 0.05f });
 
@@ -30,6 +30,8 @@ void Game::PollEvent(const std::optional<sf::Event>& event) {}
 
 void Game::Update(float deltaTime)
 {
+    ProcessInput();
+
     for(auto& i : objects)
     {
         i->Update(deltaTime);
@@ -52,26 +54,45 @@ void Game::ProcessCollision(std::unique_ptr<Object>& object)
     CheckObjectBounds(object);
 }
 
+void Game::ProcessInput()
+{
+    if(sf::Mouse::isButtonPressed(sf::Mouse::Button::Left))
+    {
+        auto object = std::make_unique<Object>(texture);
+
+        object->setPosition((sf::Vector2f)(sf::Mouse::getPosition(*window)));
+        object->setScale({ 0.05f, 0.05f });
+
+        objects.push_back(std::move(object));
+    }
+}
+
 void Game::CheckScreenBounds(std::unique_ptr<Object>& object)
 {
-    if(object->getPosition().x < 0.0f || object->getPosition().x > window->getSize().x)
+    auto leftEdge = object->getPosition().x - object->getGlobalBounds().size.x / 2.0f;
+    auto rightEdge = object->getPosition().x + object->getGlobalBounds().size.x / 2.0f;
+
+    auto topEdge = object->getPosition().y - object->getGlobalBounds().size.y / 2.0f;
+    auto bottomEdge = object->getPosition().y + object->getGlobalBounds().size.y / 2.0f;
+
+    if(leftEdge < 0.0f || rightEdge > window->getSize().x)
     {
         object->HitXBounds();
 
-        if(object->getPosition().x < 0.0f)
-            object->move({ 0.0f - object->getPosition().x, 0.0f });
-        else
-            object->move({ window->getSize().x - object->getPosition().x, 0.0f });
+        if(leftEdge < 0.0f)
+            object->move({ 0.0f - leftEdge, 0.0f });
+        else if(rightEdge > window->getSize().x)
+            object->move({ window->getSize().x - rightEdge, 0.0f });
     }
 
-    if(object->getPosition().y < 0.0f || object->getPosition().y > window->getSize().y)
+    if(topEdge < 0.0f || bottomEdge > window->getSize().y)
     {
         object->HitYBounds();
 
-        if(object->getPosition().y < 0.0f)
-            object->move({ 0.0f, 0.0f - object->getPosition().y });
-        else
-            object->move({ 0.0f, window->getSize().y - object->getPosition().y });
+        if(topEdge < 0.0f)
+            object->move({ 0.0f, 0.0f - topEdge });
+        else if(bottomEdge > window->getSize().y)
+            object->move({ 0.0f, window->getSize().y - bottomEdge });
     }
 }
 
