@@ -44,3 +44,18 @@ void Bird::ApplyForce(const sf::Vector2f& force)
 {
     velocity += force;
 }
+
+void Bird::TakeDamage(float damage)
+{
+    health -= damage;
+}
+
+float Bird::GetHealth()
+{
+    return health;
+}
+
+bool Bird::IsAlive()
+{
+    return health > 0.0f;
+}

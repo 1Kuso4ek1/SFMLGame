@@ -12,9 +12,21 @@ public:
     ~Pipe();
 
     void Update(float deltaTime) override;
+    void SetIsScored(bool scored);
+
+    bool IsScored();
+
+public:
+    static void SetSpeed(float speed);
+    static void IncreaseSpeed(float speed);
+
+    static float GetSpeed();
 
 private:
-    float speed = 1000.0f;
+    static float speed;
+
+private:
+    bool scored = false;
 };
 
 using PipePtr = std::unique_ptr<Pipe>;

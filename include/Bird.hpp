@@ -18,8 +18,15 @@ public:
 
     void SetVelocity(const sf::Vector2f& velocity);
     void ApplyForce(const sf::Vector2f& force);
+
+    void TakeDamage(float damage);
+
+    float GetHealth();
+    bool IsAlive();
     
 private:
+    float health = 100.0f;
+
     sf::Vector2f velocity;
 };
 

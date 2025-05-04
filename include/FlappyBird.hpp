@@ -11,6 +11,7 @@ public:
 
 private:
     void SetupGame();
+    void SetupUI();
 
 private:
     void PollEvent(const std::optional<sf::Event>& event) override;
@@ -23,10 +24,10 @@ private:
     void ProcessInput();
 
 private:
-    void ProcessCollision();
+    void ProcessCollision(float deltaTime);
 
-    void CheckScreenBounds();
-    void CheckObjectBounds();
+    void CheckScreenBounds(float deltaTime);
+    void CheckObjectBounds(float deltaTime);
 
 private:
     bool gameStarted = false;
@@ -34,11 +35,21 @@ private:
 
     sf::Clock flapTimer;
 
-private:
+    int score = 0;
+
+private: // Resources
     sf::Texture birdTexture;
-    sf::Texture pipeTexture;
     sf::Texture backgroundTexture;
 
+    sf::Font openSans;
+
+private: // Game objects
     BirdPtr bird;
     std::vector<PipePtr> pipes; 
+
+    std::array<SpritePtr, 2> background;
+
+private: // UI
+    std::unique_ptr<sf::Text> healthText, scoreText, gameOverText;
+    std::unique_ptr<sf::RectangleShape> healthBar;
 };
