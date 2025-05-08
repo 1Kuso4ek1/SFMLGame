@@ -9,12 +9,12 @@ class Pipe : public GameObject
 {
 public:
     Pipe(const sf::Texture& texture);
-    ~Pipe();
+    ~Pipe() override;
 
     void Update(float deltaTime) override;
     void SetIsScored(bool scored);
 
-    bool IsScored();
+    bool IsScored() const;
 
 public:
     static void SetSpeed(float speed);

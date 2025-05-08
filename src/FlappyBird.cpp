@@ -7,15 +7,15 @@
 FlappyBird::FlappyBird(const sf::VideoMode& mode, const std::string& name)
     : Application(mode, name)
 {
-    if(!birdTexture.loadFromFile("../resources/textures/ptitsa.png")
-       || !backgroundTexture.loadFromFile("../resources/textures/background.png"))
+    if(!birdTexture.loadFromFile("resources/textures/ptitsa.png")
+       || !backgroundTexture.loadFromFile("resources/textures/background.png"))
         std::println("Failed to load texture");
 
     if(!birdTexture.generateMipmap()
        || !backgroundTexture.generateMipmap())
         std::println("Failed to generate mipmap");
 
-    if(!openSans.openFromFile("../resources/fonts/OpenSans-Regular.ttf"))
+    if(!openSans.openFromFile("resources/fonts/OpenSans-Regular.ttf"))
         std::println("Failed to load font");
 
     background =
@@ -132,10 +132,10 @@ void FlappyBird::Update(float deltaTime)
 
         if(!gameOver)
         {
-            for(auto& i : pipes)
+            for(const auto& i : pipes)
                 i->Update(deltaTime);
 
-            for(auto& bg : background)
+            for(const auto& bg : background)
             {
                 bg->move({ (-Pipe::GetSpeed() / 10.0f) * deltaTime, 0.0f });
             
@@ -145,7 +145,7 @@ void FlappyBird::Update(float deltaTime)
         }
     }
 
-    float sinValue = std::abs(sin(flapTimer.getElapsedTime().asSeconds() * 5.0f)) / 50.0f;
+    float sinValue = std::abs(std::sin(flapTimer.getElapsedTime().asSeconds() * 5.0f)) / 50.0f;
 
     bird->setScale(sf::Vector2f(-0.06f, 0.06f) - sf::Vector2f(sinValue, sinValue));
 }
@@ -159,10 +159,10 @@ void FlappyBird::Render()
 
     window->draw(*bird);
 
-    for(auto& i : pipes)
+    for(const auto& i : pipes)
         window->draw(*i);
 
-    healthText->setString("Health: " + std::to_string((int)(bird->IsAlive() ? bird->GetHealth() : 0.0f)));
+    healthText->setString("Health: " + std::to_string(static_cast<int>(bird->IsAlive() ? bird->GetHealth() : 0.0f)));
     healthBar->setSize({ bird->IsAlive() ? bird->GetHealth() : 0.0f, 20.0f });
 
     window->draw(*healthText);
@@ -186,7 +186,7 @@ void FlappyBird::ProcessInput()
 {
 }
 
-void FlappyBird::CheckScreenBounds(float deltaTime)
+void FlappyBird::CheckScreenBounds(float deltaTime) const
 {
     auto topEdge = bird->getPosition().y - bird->getGlobalBounds().size.y / 2.0f;
     auto bottomEdge = bird->getPosition().y + bird->getGlobalBounds().size.y / 2.0f;
@@ -233,7 +233,7 @@ void FlappyBird::CheckScreenBounds(float deltaTime)
 
 void FlappyBird::CheckObjectBounds(float deltaTime)
 {
-    for(auto& i : pipes)
+    for(const auto& i : pipes)
     {
         auto intersection = bird->getGlobalBounds().findIntersection(i->getGlobalBounds());
 

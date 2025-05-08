@@ -9,10 +9,10 @@ float Pipe::speed = 300.0f;
 Pipe::Pipe(const sf::Texture& texture)
     : GameObject(texture)
 {
-    setOrigin((sf::Vector2f)(texture.getSize()) / 2.0f);
+    setOrigin(sf::Vector2f(texture.getSize()) / 2.0f);
 }
 
-Pipe::~Pipe() {}
+Pipe::~Pipe() = default;
 
 void Pipe::Update(float deltaTime)
 {
@@ -24,7 +24,7 @@ void Pipe::SetIsScored(bool scored)
     this->scored = scored;
 }
 
-bool Pipe::IsScored()
+bool Pipe::IsScored() const
 {
     return scored;
 }

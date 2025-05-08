@@ -12,10 +12,8 @@ Object::Object(const sf::Texture& texture)
 
     velocity.x = Random::Get().Range(-100.0f, 100.0f);
 
-    setOrigin((sf::Vector2f)(texture.getSize()) / 2.0f);
+    setOrigin(sf::Vector2f(texture.getSize()) / 2.0f);
 }
-
-Object::~Object() {}
 
 void Object::Update(float deltaTime)
 {
@@ -47,5 +45,5 @@ void Object::ApplyForce(const sf::Vector2f& force)
 void Object::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
     //target.draw(circle);
-    target.draw((sf::Sprite)(*this));
+    target.draw(static_cast<sf::Sprite>(*this));
 }

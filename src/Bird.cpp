@@ -7,10 +7,10 @@
 Bird::Bird(const sf::Texture& texture)
     : GameObject(texture)
 {
-    setOrigin((sf::Vector2f)(texture.getSize()) / 2.0f);
+    setOrigin(sf::Vector2f(texture.getSize()) / 2.0f);
 }
 
-Bird::~Bird() {}
+Bird::~Bird() = default;
 
 void Bird::Update(float deltaTime)
 {
@@ -50,12 +50,12 @@ void Bird::TakeDamage(float damage)
     health -= damage;
 }
 
-float Bird::GetHealth()
+float Bird::GetHealth() const
 {
     return health;
 }
 
-bool Bird::IsAlive()
+bool Bird::IsAlive() const
 {
     return health > 0.0f;
 }

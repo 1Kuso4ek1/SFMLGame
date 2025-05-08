@@ -9,7 +9,7 @@ class Object : public GameObject
 {
 public:
     Object(const sf::Texture& texture);
-    ~Object();
+    ~Object() override = default;
 
     void Update(float deltaTime) override;
     

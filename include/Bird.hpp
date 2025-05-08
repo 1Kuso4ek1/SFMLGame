@@ -9,7 +9,7 @@ class Bird : public GameObject
 {
 public:
     Bird(const sf::Texture& texture);
-    ~Bird();
+    ~Bird() override;
 
     void Update(float deltaTime) override;
     
@@ -21,8 +21,8 @@ public:
 
     void TakeDamage(float damage);
 
-    float GetHealth();
-    bool IsAlive();
+    float GetHealth() const;
+    bool IsAlive() const;
     
 private:
     float health = 100.0f;

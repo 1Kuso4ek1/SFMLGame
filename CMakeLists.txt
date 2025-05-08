@@ -25,4 +25,11 @@ target_link_libraries(Engine SFML::Graphics)
 add_executable(SFMLGame main.cpp)
 target_link_libraries(SFMLGame Engine)
 
+add_custom_command(
+    TARGET SFMLGame POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E copy_directory
+    "${PROJECT_SOURCE_DIR}/resources"
+    "$<TARGET_FILE_DIR:SFMLGame>/resources"
+)
+
 add_subdirectory(libraries/SFML)

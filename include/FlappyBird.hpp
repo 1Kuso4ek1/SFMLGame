@@ -7,7 +7,7 @@ class FlappyBird : public Application
 {
 public:
     FlappyBird(const sf::VideoMode& mode, const std::string& name);
-    ~FlappyBird() = default;
+    ~FlappyBird() override = default;
 
 private:
     void SetupGame();
@@ -26,10 +26,10 @@ private:
 private:
     void ProcessCollision(float deltaTime);
 
-    void CheckScreenBounds(float deltaTime);
+    void CheckScreenBounds(float deltaTime) const;
     void CheckObjectBounds(float deltaTime);
 
-private:
+private: // Game state
     bool gameStarted = false;
     bool gameOver = false;
 

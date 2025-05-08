@@ -6,4 +6,4 @@ GameObject::GameObject(const sf::Texture& texture)
     : Sprite(texture)
 {}
 
-GameObject::~GameObject() {}
+GameObject::~GameObject() = default;

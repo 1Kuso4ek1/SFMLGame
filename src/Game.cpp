@@ -60,7 +60,7 @@ void Game::ProcessInput()
     {
         auto object = std::make_unique<Object>(texture);
 
-        object->setPosition((sf::Vector2f)(sf::Mouse::getPosition(*window)));
+        object->setPosition(sf::Vector2f(sf::Mouse::getPosition(*window)));
         object->setScale({ 0.05f, 0.05f });
 
         objects.push_back(std::move(object));
